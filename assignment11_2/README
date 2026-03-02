@@ -1,0 +1,67 @@
+ What drives the price of a car?
+
+The original dataset contained information on 3 million used cars. The practice dataset contains information on 426K cars to ensure speed of processing. The objective of this project is to determine what factors make a car more or less expensive. After detailed analysis, a clear recommendation is provided to the client -- a used car dealership -- as to what consumers value in a used car.
+
+# Business Understanding
+
+A car dealership works on the basis that they can buy cars for less than they are sold for. Therefore, prediction of the final sale price of the car is very important. Other than the profit, the demand of the car is also important for faster inventory turnover. Demand of the car depends on many factors but mostly the drivers' demographic and preferences are key elements. 
+
+
+# Exploratory Data Analysis and Data Cleaning
+
+The provided dataset contains 426880 records and 18 features. The dataset is not clean and has a lot of missing values and garbage advertisement. The "model" column contains ads with bogus prices for the cars with phrases like: SPECIAL FINANCE PROGRAM 2020, Flexible Down Payments, BUY HERE PAY HERE, THE VEHICLE YOU DESERVE, any and all, Janesville, and etc. Fortunately, these rows have empty/null "manufacturer" values, so they will be dropped automatically in data-cleaning. Lastly, the type of most feature columns needs a transformation. 
+
+First, domain knowledge of the car suggests that "VIN" and "id" columns should be dropped since they are just unique identifications. Since we also have the "state" column, "region" can be dropped completely. As mentioned on EDA section, "model" column can be dropped as well since it provides no extra information for the data. It was also decided to drop rows that have both missing "manufacturer" and "year," or where the "price" was zero, because these are information critical to the model. Here is a summary of missing values:
+
+- size            %71.77
+- cylinders       %41.62
+- condition       %40.79
+- VIN             %37.73
+- drive           %30.59
+- paint_color     %30.50
+- type            %21.75
+- manufacturer     %4.13
+- title_status     %1.93
+- model            %1.24
+- odometer         %1.03
+- fuel             %0.71
+- transmission     %0.60
+- year             %0.28
+
+The rest of the columns needed to be transformed into appropriate datatypes, and missing values were filled with appropriate strings. After doing these, the missing value reduced to %3.8 in "manufacturer," and %0.56 for "odometer," where ".dropna()" where used for them. There was no duplicated data, and total rows after data-cleaning was reduced to 375619 with 14 features.
+
+After plotting the histogram of the data, it was revealed that price is highly right-skewed with extreme outliers, year was left-skewed, and odometer was right-skewed. To remove price outliers, mean and standard deviation were calculated as $83,781 and $12,983,817 respectively, which shows the highly unusual right skew by $13M. It was decided to drop prices above $150K. For the year column, mean and std were calculated and records between [mean-2\*std] and [mean+2\*std] were kept. For the odometer column, records above [mean+2\*std] were removed. 
+
+#Histograms
+
+The numerical columns have high correlations, namely, price and year at 0.57, and price and odometer at -0.53. However, we can also see that odometer and year are highly correlated at -0.67.
+
+
+# Building ML Models:
+
+Before building any model, the data has to be transformed, normalized, and scaled properly. Therefore, a pipeline is chosen to facilitate with the model building process. The first step in the pipeline is to transform the categorical data using OneHotEncoder. The second step is to normalize the data with QuantileTransformer, and then using StandardScalar to scale the data. Based on future models, and finally the regression model.
+
+#Regression Pipelines
+
+First machine learning model to be built is a simple regression model with all categorical columns removed to be used as a baseline for evaluating other models. This pipeline has no transformer and no feature selector since there are no categorical data. The next 3 pipelines will all have the column transformer to transform the categorical data, and use Lasso, Ridge, and LinearRegression as their regression models.
+
+# Evaluation
+
+The baseline linear model returned RMSE score of 11593 and 11577 on Training and Test data respectively, while Lasso (with alpha set to 0.5) returned 8777 and 8742, Ridge (alpha=0.5) returned 8678 and 8639, and LinearRegression returned 8687 and 8648. The scores of all 3 models are very close and almost align completely as seen in charts below even when zoomed in. They also have performances better than the baseline. 
+
+
+## Grid Search CV
+Running a GridSearchCV pipeline shown below with Lasso automatic features selection of 4 to 10 features reveals a similar result. Looking at the coefficients of the regression model reveals that having newer model year, lower odometer, and clean title are the best general features for any vehicle on the market. 
+
+
+#Future Exploration Scope
+However, penalized 4 cylinders and front wheel drive (fwd) in these models suggests that we need a completely different approach of business understanding of the car dealership needs. According to CRISP-DM Process Model, we have to go back to the beginning and rethink the process. Looking at the type column shows that SUVs, Sedans, and Pickups are the most dominant features. To create better ML models, it was decided to separate the data into these three categories, and run the pipelines on each segment separately. In their data cleaning process, it was decided to only truncate model years from the left side and keep all the recent years. 
+
+
+# Deployment
+
+The general price of a car depends on newer model year, lower odometer readings, and a clean title status. 
+
+However, the prediction of price becomes more complicated when the different types of vehicles and features are considered. This ca be explored further.  
+
+
