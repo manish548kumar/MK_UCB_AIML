@@ -31,6 +31,9 @@ The dataset was obtained from Kaggle: [Airbnb Price Dataset](https://www.kaggle.
     * Ranked amenities by correlation with price
     * Kept the top 20 most predictive features
 
+**Observation Images**
+![Top 10 Cities by Number of Airbnb Listings!](./image/city_distribution.png)
+
 ### Baseline Model Training
 
 Implemented a simple yet effective regression algorithm to predict log-price based on available features.
