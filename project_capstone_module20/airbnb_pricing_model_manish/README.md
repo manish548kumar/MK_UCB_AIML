@@ -31,8 +31,19 @@ The dataset was obtained from Kaggle: [Airbnb Price Dataset](https://www.kaggle.
     * Ranked amenities by correlation with price
     * Kept the top 20 most predictive features
 
-**Observation Images**
+* **Observation Images/Plots**
 ![Top 10 Cities by Number of Airbnb Listings!](./image/city_distribution.png)
+
+![Log Price vs. Number of Accommodates!](./image/price_vs_accommodates.png)
+
+![Log Price by Room Type!](./image/price_by_room_type.png)
+
+![Top 10 Property Types!](./image/property_type_count.png)
+
+* **Top20 Features**
+![Top 20 Features!](./image/top20_features.png)
+
+
 
 ### Baseline Model Training
 
