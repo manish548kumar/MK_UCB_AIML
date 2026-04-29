@@ -41,6 +41,7 @@ The dataset was obtained from Kaggle: [Airbnb Price Dataset](https://www.kaggle.
 ![Top 10 Property Types!](./image/property_type_count.png)
 
 * **Top20 Features**
+
 ![Top 20 Features!](./image/top20_features.png)
 
 
