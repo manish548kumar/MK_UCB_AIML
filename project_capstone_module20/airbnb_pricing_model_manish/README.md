@@ -7,6 +7,7 @@
 **(Module 20) Initial Baseline model & Exploratory Data Analysis**: [basic_model_eda_airbnb_pricing.ipynb](basic_model_eda_airbnb_pricing.ipynb)
 
 **Final Model**: [final_model/final_models_airbnb_pricing.ipynb](final_model/final_models_airbnb_pricing.ipynb)
+**Final Report**: [final_model/README.md](final_model/README.md)
 
 ### Data Source
 
